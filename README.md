@@ -1,5 +1,5 @@
 
-# SQL 30 Practice Questions
+# SQL Daily Practice Questions
 
 A collection of **30 MySQL practice questions and solutions** designed to strengthen SQL fundamentals through hands-on practice.
 
