@@ -1,5 +1,5 @@
 -- 1 CREATING A DATABASE
-Create database Company_DB;
+CREATE DATABASE Company_DB;
 -- 2 CREATING A TABLE 
 create table employees(
 	emp_id 	INT PRIMARY KEY,
@@ -12,9 +12,9 @@ create table employees(
 -- 3  INSERTING DATA
 
 INSERT INTO employees(emp_id, first_name, last_name, gender, salary, department) Values
-	(101,'Prashant','Kumar','M','55000','IT'),
+	(101, 'Prashant','Kumar','M','55000','IT'),
     (102,'Rahul', 'Sharma','M','48000','HR'),
-    (103,'Priya','Singh','F','62000','Finance'),
+    (103, 'Priya','Singh','F','62000','Finance'),
     (104,'Aman','Verma','M','51000','Sales'),
     (105,'Neha','Gupta','F','59000','IT');
     
