@@ -1,52 +1,76 @@
-# 🚀 SQL Daily Practice Questions
+# 🚀 SQL Daily Practice Journey
 
-> A structured collection of **30+ MySQL practice questions and solutions** designed to strengthen SQL fundamentals through hands-on practice.
+> A growing collection of **60+ MySQL practice questions and solutions** covering SQL fundamentals, database operations, aggregate functions, and JOINs.
 
-This repository is part of my **SQL learning journey**, where I solve SQL problems daily to improve problem-solving skills and prepare for **Data Analyst, Data Science, and SQL interviews**.
+This repository documents my **daily SQL learning journey**, where I solve SQL problems consistently to strengthen my database skills and prepare for **Data Analyst, Data Science, and SQL Developer interviews**.
 
 ---
 
-## 📖 About the Repository
+# 📚 About This Repository
 
-This project contains carefully organized SQL practice questions covering beginner to intermediate concepts.
+This project contains hands-on SQL practice questions written and tested in **MySQL Workbench**.
 
-Each query is written and tested in **MySQL Workbench**, making it suitable for:
+The goal of this repository is to build a strong foundation in SQL through consistent practice while maintaining clean, well-commented queries.
+
+This repository is useful for:
 
 - 🎓 Students
 - 💼 Placement Preparation
-- 🧠 SQL Interview Practice
-- 📊 Data Analytics Beginners
-- 👨‍💻 Self-Learning
+- 📊 Data Analyst Aspirants
+- 🧠 SQL Interview Preparation
+- 👨‍💻 Self-Learners
 
 ---
 
-## ✨ Topics Covered
+# ✨ SQL Topics Covered
 
-### 🟢 SQL Basics
-- Database Creation
-- Table Creation
+## 🟢 SQL Fundamentals
+
+- CREATE DATABASE
+- CREATE TABLE
 - INSERT INTO
 - SELECT
 - WHERE
+- DISTINCT
 - ORDER BY
 - LIMIT
-- DISTINCT
+- LIKE
+- BETWEEN
+- IN
+- IS NULL
+- NOT NULL
 
-### 🟡 Aggregate Functions
+---
+
+## 🟡 Aggregate Functions
+
 - COUNT()
 - SUM()
 - AVG()
 - MIN()
 - MAX()
 
-### 🟠 Data Grouping
+---
+
+## 🟠 GROUP BY & HAVING
+
 - GROUP BY
 - HAVING
+- Aggregate Filtering
 - Aliases (AS)
 
-### 🔵 Database Operations
+---
+
+## 🔵 Data Manipulation (DML)
+
+- INSERT
 - UPDATE
 - DELETE
+
+---
+
+## 🟣 Table Operations (DDL)
+
 - ALTER TABLE
 - ADD COLUMN
 - DROP COLUMN
@@ -54,158 +78,232 @@ Each query is written and tested in **MySQL Workbench**, making it suitable for:
 - CHANGE COLUMN
 - RENAME COLUMN
 
-### 🟣 Coming Soon
+---
+
+## 🟢 SQL JOINs
+
 - INNER JOIN
 - LEFT JOIN
 - RIGHT JOIN
-- FULL OUTER JOIN
-- Subqueries
-- Views
-- Stored Procedures
-- Window Functions
-- Triggers
-- Indexes
-- CTEs
+- JOIN with WHERE
+- JOIN with Aggregate Functions
+- GROUP BY with JOIN
+- HAVING with JOIN
+- ORDER BY with JOIN
 
 ---
 
-## 🛠️ Tech Stack
+## 🚧 Coming Soon
+
+- FULL OUTER JOIN
+- SELF JOIN
+- CROSS JOIN
+- UNION
+- UNION ALL
+- Subqueries
+- Correlated Subqueries
+- Views
+- CTEs
+- Window Functions
+- Stored Procedures
+- Triggers
+- Indexes
+
+---
+
+# 🛠 Tech Stack
 
 | Tool | Version |
 |------|---------|
 | MySQL | 8.x |
 | MySQL Workbench | Latest |
+| Git | Latest |
+| GitHub | Portfolio Repository |
 
 ---
 
-## 📂 Repository Structure
+# 📂 Repository Structure
 
 ```
-SQL-Daily-Practice-Questions/
+SQL-Daily-Practice/
 │
-├──  DAILY-QUESTION-PRACTICE SQL.sql
+├── SQL_Daily_Practice.sql
 ├── README.md
 └── screenshots/
 ```
 
 ---
 
-## 🚀 Getting Started
+# 🚀 Getting Started
 
-### Clone the Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/prashant23-kr/SQL-30-Practice-Questions.git
 ```
 
-### Run the Queries
+### Run the SQL File
 
 1. Open MySQL Workbench
-2. Open the SQL file
-3. Execute the queries one by one
-4. Observe the output
-5. Practice by modifying the queries
+2. Create a new SQL tab
+3. Open the SQL script
+4. Execute queries one by one
+5. Observe outputs
+6. Try modifying queries for practice
 
 ---
 
-## 📌 Sample Practice Questions
+# 📌 Practice Questions Included
 
-- Create a database
-- Create an Employees table
-- Insert records
-- Retrieve employee details
-- Filter records using WHERE
-- Sort data using ORDER BY
-- Find maximum salary
-- Calculate average salary
-- Group employees by department
-- Use HAVING with aggregate functions
-- Update employee records
-- Delete records
-- Modify table structure
+✔ Database Creation
+
+✔ Table Creation
+
+✔ Insert Records
+
+✔ Data Retrieval
+
+✔ Filtering Data
+
+✔ Sorting Records
+
+✔ Aggregate Functions
+
+✔ GROUP BY
+
+✔ HAVING
+
+✔ UPDATE
+
+✔ DELETE
+
+✔ ALTER TABLE
+
+✔ INNER JOIN
+
+✔ LEFT JOIN
+
+✔ RIGHT JOIN
+
+✔ Aggregate Queries with JOIN
+
+✔ Interview-style SQL Questions
 
 ---
 
-## 🎯 Learning Outcomes
+# 🎯 Skills Demonstrated
 
-By completing this repository, you'll gain hands-on experience with:
-
-- ✅ Writing SQL Queries
-- ✅ Database Design Basics
-- ✅ Data Filtering & Sorting
-- ✅ Aggregate Functions
-- ✅ Grouping & HAVING
-- ✅ Table Alteration
-- ✅ CRUD Operations
-- ✅ SQL Best Practices
-- ✅ Interview Preparation
+- SQL Query Writing
+- Database Design
+- CRUD Operations
+- Data Filtering
+- Data Sorting
+- Aggregate Functions
+- GROUP BY & HAVING
+- Table Modification
+- Relational Database Concepts
+- SQL JOIN Operations
+- Query Optimization Basics
+- Problem Solving
 
 ---
 
-## 📈 Progress
+# 📈 Progress Tracker
 
 | Module | Status |
 |---------|--------|
 | SQL Basics | ✅ Completed |
 | CRUD Operations | ✅ Completed |
 | Aggregate Functions | ✅ Completed |
-| GROUP BY & HAVING | ✅ Completed |
+| GROUP BY | ✅ Completed |
+| HAVING | ✅ Completed |
 | ALTER TABLE | ✅ Completed |
-| JOINs | 🚧 In Progress |
-| Subqueries | ⏳ Coming Soon |
+| INNER JOIN | ✅ Completed |
+| LEFT JOIN | ✅ Completed |
+| RIGHT JOIN | ✅ Completed |
+| Advanced JOIN Queries | ✅ Completed |
+| Subqueries | 🚧 In Progress |
 | Window Functions | ⏳ Coming Soon |
+| Stored Procedures | ⏳ Coming Soon |
 
 ---
 
-## 💡 Future Goals
+# 📅 Daily Learning Goal
 
-- Complete **100+ SQL Practice Questions**
-- Add real-world SQL interview problems
-- Build SQL mini-projects
-- Include HackerRank & LeetCode SQL solutions
-- Add screenshots for every important query
-- Upload daily SQL practice
+I regularly update this repository with new SQL questions and concepts to improve consistency and strengthen my SQL skills.
 
----
+Current Progress:
 
-## 🤝 Contributing
+✅ 60+ SQL Questions Solved
 
-Suggestions, improvements, and feedback are always welcome.
-
-If you'd like to contribute:
-
-1. Fork the repository
-2. Create a new branch
-3. Make your changes
-4. Submit a Pull Request
+🎯 Target: 200+ SQL Questions
 
 ---
 
-## ⭐ Support
+# 💡 Future Roadmap
 
-If you found this repository helpful:
+- Solve 200+ SQL Interview Questions
+- Add Real-World SQL Business Problems
+- Upload HackerRank SQL Solutions
+- Upload LeetCode SQL Solutions
+- Build SQL Mini Projects
+- Create SQL Cheat Sheets
+- Add Screenshots for Important Outputs
+- Practice Query Optimization
+- Learn Advanced SQL Concepts
 
-⭐ Star this repository
+---
+
+# 🤝 Contributing
+
+Suggestions and improvements are always welcome.
+
+Feel free to:
+
+- Fork this repository
+- Improve existing queries
+- Add optimized solutions
+- Submit a Pull Request
+
+---
+
+# ⭐ Support
+
+If this repository helps you learn SQL,
+
+⭐ Star the repository
 
 🍴 Fork it
 
-📢 Share it with others preparing for SQL interviews.
+📢 Share it with others learning SQL
 
 ---
 
-## 👨‍💻 Author
+# 👨‍💻 Author
 
-**Prashant Kumar**
+## Prashant Kumar
 
-Aspiring **Data Analyst | Data Scientist**
+**Aspiring Data Analyst | Data Scientist**
 
-Currently learning:
+### Currently Learning
+
 - SQL
-- Power BI
 - Python
+- Power BI
 - Excel
 - Data Analytics
+- Data Visualization
+- Machine Learning
 
 ---
 
-### 📌 Follow my journey as I solve SQL questions daily and build real-world data projects!
+## 📬 Connect With Me
+
+- 💼 LinkedIn: (www.linkedin.com/in/prashant-kumar238)
+- 📧 Email: (prashant.kumar3948@gmail.com)
+
+---
+
+# 🚀 Keep Learning, Keep Building, Keep Growing!
+
+> "Consistency beats intensity. One SQL query every day is better than 100 queries once a month."
