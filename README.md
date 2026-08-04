@@ -83,7 +83,7 @@ Each query is written and tested in **MySQL Workbench**, making it suitable for:
 ```
 SQL-Daily-Practice-Questions/
 │
-├── 30 QUESTION SQL.sql
+├──  DAILY-QUESTION-PRACTICE SQL.sql
 ├── README.md
 └── screenshots/
 ```
