@@ -1,5 +1,5 @@
 -- 1 CREATING A DATABASE
-CREATE DATABASE Company_DB;
+Create database Company_DB;
 -- 2 CREATING A TABLE 
 create table employees(
 	emp_id 	INT PRIMARY KEY,
@@ -12,9 +12,9 @@ create table employees(
 -- 3  INSERTING DATA
 
 INSERT INTO employees(emp_id, first_name, last_name, gender, salary, department) Values
-	(101, 'Prashant','Kumar','M','55000','IT'),
+	(101,'Prashant','Kumar','M','55000','IT'),
     (102,'Rahul', 'Sharma','M','48000','HR'),
-    (103, 'Priya','Singh','F','62000','Finance'),
+    (103,'Priya','Singh','F','62000','Finance'),
     (104,'Aman','Verma','M','51000','Sales'),
     (105,'Neha','Gupta','F','59000','IT');
     
@@ -325,3 +325,122 @@ INNER JOIN department d
 on e.dept_id = d.dept_id
 where salary >= 50000 group by dept_name having avg(e.salary) > 55000
 order by avg_salary desc;
+
+05/08/2026
+
+
+-- 62 Display: dept_name MAX(e.salary) AS highest_salary
+-- Sort the result by highest_salary in descending order.
+select dept_name, MAX(e.salary) AS highest_salary
+from employees e
+Inner join department d
+on e.dept_id = d.dept_id
+group by dept_name having highest_salary
+order by highest_salary DESC;
+
+-- 63 -- Display: dept_name MIN(e.salary) AS lowest_salary
+-- Show only those departments whose lowest salary is greater than 50,000. 
+
+select dept_name, MIN(e.salary) as lowest_salary
+from employees e
+inner join department d
+on e.dept_id = d.dept_id
+group by dept_name having min(e.salary) > 50000
+order by lowest_salary DESC;
+
+-- 64 Display: dept_name ,COUNT(*) AS total_emp ,AVG(e.salary) AS avg_salary
+-- Conditions
+-- Show only departments:
+-- having more than 2 employees, and
+-- having an average salary greater than 55,000.
+
+SELECT d.dept_name,
+       COUNT(*) AS total_emp,
+       AVG(e.salary) AS avg_salary
+FROM employees e
+INNER JOIN department d
+ON e.dept_id = d.dept_id
+GROUP BY d.dept_name
+HAVING COUNT(*) > 2
+   AND AVG(e.salary) > 55000
+ORDER BY avg_salary DESC;
+
+-- 65 Display: dept_name COUNT(*) AS total_emp MAX(e.salary) AS highest_salary
+-- Conditions 
+-- Consider only employees whose salary is greater than 50,000.
+-- Show only departments having at least 2 employees.
+-- Sort by highest_salary in descending order.
+
+select dept_name, COUNT(*) as total_emp, MAX(e.salary) as highest_salary
+from employees e
+inner join department d
+on e.dept_id = d.dept_id
+where e.salary > 50000
+group by d.dept_name having count(*) >= 2
+order by highest_salary DESC; 
+
+-- 65 Question Display: dept_name AVG(e.salary) AS avg_salary COUNT(*) AS total_emp
+-- Conditions:- 
+-- Consider only employees in the IT and HR departments.
+-- Show only departments whose average salary is greater than 55,000.
+-- Sort by avg_salary in descending order.
+
+select dept_name, AVG(e.salary) AS avg_salary, count(*) AS  total_emp
+from employees e
+inner join department d
+on e.dept_id = d.dept_id
+where d.dept_name IN ('IT','HR')
+group by d.dept_name  having avg(e.salary) > 55000
+order by avg_salary DESC; 
+
+-- 66 Display: dept_name COUNT(*) AS total_emp AVG(e.salary) AS avg_salary MAX(e.salary) AS highest_salary
+-- Conditions
+-- Consider only employees whose salary is between 50000 and 70000.
+-- Show only departments having at least 2 employees.
+-- Show only departments whose average salary is greater than 55000.
+-- Sort by highest_salary in descending order.
+
+select dept_name, count(*) as total_emp, Avg(e.salary) AS avg_salary, max(e.salary) as highest_salary
+from employees e
+inner join department d
+on e.dept_id = d.dept_id
+where e.salary between 50000 and 70000
+group by d.dept_name HAVING COUNT(*) >= 2
+   AND AVG(e.salary) > 55000
+order by highest_salary DESC;
+
+-- 67 Display: fname dept_name
+-- Show all employees, even if they are not assigned to any department.
+
+select fname, dept_name
+from employees e
+left join department d
+on e.dept_id = d.dept_id;
+
+-- 68 Display: fname dept_name
+-- Show only those employees who are not assigned to any department.
+
+select fname, dept_name
+from employees e
+left join department d
+on e.dept_id = d.dept_id
+where d.dept_name is NULL;
+
+-- 69 Display: fname, dept_name
+-- Show only employees who are assigned to a department.
+
+select fname, dept_name
+from employees e
+left join department d
+on e.dept_id = d.dept_id
+where d.dept_name is not null;
+
+-- 70 Display: fname, salary, dept_name
+-- Show all employees, even if they don't belong to any department.
+-- Sort the result by salary in descending order.
+
+select fname,dept_name, salary
+from employees e
+left join department d
+on e.dept_id = d.dept_id 
+order by e.salary desc;
