@@ -444,3 +444,143 @@ from employees e
 left join department d
 on e.dept_id = d.dept_id 
 order by e.salary desc;
+
+-- 71 Display: dept_name, COUNT(e.emp_id) AS total_employees
+-- Show every department, even if no employee works there.
+
+select dept_name, count(e.emp_id) AS total_employees
+from employees e
+left join department d
+on d.dept_id = e.dept_id
+group by d.dept_name
+order by d.dept_name;
+
+-- 72 Display: dept_name
+-- Show only those departments that have no employees.
+
+select dept_name
+from department d
+left join employees e
+on d.dept_id = e.dept_id
+where e.emp_id is null;
+
+-- 73 dept_name fname
+-- Show all departments, including departments with no employees.
+
+select dept_name ,fname
+from department d
+left join employees e
+on d.dept_id = e.dept_id;
+
+-- Right Join
+
+-- 74  Display: fname dept_name
+-- Show all departments, even if no employee belongs to them.
+
+SELECT e.fname,
+       d.dept_name
+FROM employees e
+RIGHT JOIN department d
+ON e.dept_id = d.dept_id;  
+
+
+-- 75 Display: fname, dept_name
+--  Show all employees, even if they are not assigned to any department.
+
+select fname, dept_name
+from department d
+right join employees e
+on e.dept_id = d.dept_id;
+
+-- 76 Add new column manager_id for self join
+alter table employees 
+add column manager_id int;
+
+-- 77 inserting the data into manager_id
+UPDATE employees
+SET manager_id = NULL
+WHERE emp_id = 101;
+
+UPDATE employees
+SET manager_id = 102
+WHERE emp_id IN (105);
+
+UPDATE employees
+SET manager_id = 101
+WHERE emp_id IN (102,103);
+
+SELECT emp_id,
+       fname,
+       manager_id
+FROM employees;
+select * from employees;
+
+-- 78 now we will start self join
+
+-- Display: Employee Name 
+-- Manager Name
+
+SELECT e.fname AS Employee_Name,
+       m.fname AS Manager_Name
+FROM employees e
+INNER JOIN employees m
+ON e.manager_id = m.emp_id;
+
+-- 79 Display:
+-- Employee Name
+-- Employee Salary
+-- Manager Name
+-- Manager Salary
+
+select e.fname as employee_name,
+	   e.salary as employee_name,
+       m.fname as manager_name,
+       m.salary as manager_salary
+       from employees e
+       inner join employees m
+       on e.manager_id = m.emp_id;
+       ;
+
+-- 80 Display: Employee Name Manager Name
+-- Show only employees whose salary is greater than their manager's salary.
+select e.fname as employee_name,
+	   m.fname as manager_name
+       from employees e 
+       inner join employees m
+       on e.manager_id = m.emp_id
+       where e.salary > m.salary;
+       
+-- 81 Display: Employee Name Manager Name
+-- Show only employees whose manager is Prashant.
+select e.fname as employee_Name,
+	   m.fname as manager_name
+       from employees e
+       inner join employees m
+       on e.manager_id = m.emp_id
+       where m.fname = 'Prashant';
+       
+-- 82 Display: employee_nam, employee_salary, manager_name, manager_salar
+-- Show only employees whose salary is less than their manager's salary.
+
+select e.fname as employee_Name,
+	   e.salary as employee_Name,
+       m.fname as manager_Name,
+       m.salary as manager_salary
+       from employees e
+       inner join employees m
+       on e.manager_id = m.emp_id	
+where e.salary > m.salary;
+
+-- 83 Display: employee_name, manager_name
+-- Show employees whose manager is Rahul.
+
+SELECT e.fname AS employee_name,
+       m.fname AS manager_name
+FROM employees e
+INNER JOIN employees m
+ON e.manager_id = m.emp_id
+WHERE m.fname = 'Rahul';
+
+-- 84 Display: employee_name manager_name
+-- Show employees whose manager's salary is greater than 55000.
+
