@@ -39,8 +39,7 @@ This repository is useful for:
 - IN
 - IS NULL
 - NOT NULL
-- Join
-  
+
 
 
 ---
