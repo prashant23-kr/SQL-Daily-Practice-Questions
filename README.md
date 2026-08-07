@@ -40,7 +40,7 @@ This repository is useful for:
 - IS NULL
 - NOT NULL
 - Join
-- Inner Join
+  
 
 
 ---
