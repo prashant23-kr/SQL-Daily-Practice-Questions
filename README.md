@@ -296,6 +296,7 @@ If this repository helps you learn SQL,
 - Data Analytics
 - Data Visualization
 - Machine Learning
+- Data Learning
 
 ---
 
