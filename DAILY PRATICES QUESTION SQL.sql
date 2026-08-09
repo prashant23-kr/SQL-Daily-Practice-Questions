@@ -584,3 +584,23 @@ WHERE m.fname = 'Rahul';
 -- 84 Display: employee_name manager_name
 -- Show employees whose manager's salary is greater than 55000.
 
+select e.fname as employee_name,
+	   m.fname as manager_name
+from employees e
+INNER JOIN employees m
+on e.manager_id = m.emp_id
+where m.salary > 55000;      
+
+-- 85  Display: employee_name, manager_name, employee_salary, manager_salary
+-- Show only employees whose manager earns more than the employee .
+select e.fname as employee_name,
+	   m.fname as manager_name,
+       e.salary as employee_salary,
+       m.salary as manager_salary
+from employees e
+inner join employees m
+on e.manager_id = m.emp_id
+where e.salary < m.salary;
+
+-- 86 Display the employee name and manager name for employees who have a manager.
+
