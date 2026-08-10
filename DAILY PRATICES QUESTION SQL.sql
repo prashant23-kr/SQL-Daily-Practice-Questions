@@ -602,5 +602,133 @@ inner join employees m
 on e.manager_id = m.emp_id
 where e.salary < m.salary;
 
--- 86 Display the employee name and manager name for employees who have a manager.
+-- Today
 
+-- 86 Display the employee name and manager name for employees who have a manager.
+SELECT e.fname AS employee_name,
+       m.fname AS manager_name
+FROM employees e
+INNER JOIN employees m
+ON e.manager_id = m.emp_id;
+
+-- 87  Display the employee name and manager name for employees who do NOT have a manager.
+select e.fname as employee_name,
+	   m.fname as manager_name
+from employees e
+left join employees m
+on e.manager_id = m.manager_id
+where e.manager_id IS NULL;
+
+-- 88 Display all employees and their manager names, including employees who do NOT have a manager.
+select e.fname as employee_name,
+	   m.fname as manager_name
+from employees e
+left join employees m
+on e.manager_id = m.emp_id
+where e.manager_id = m.emp_id IS null;
+
+-- NOW WE HAVE TO START CROSS JOIN --
+-- 89 Display every possible combination of employee names and department names.
+SELECT e.fname,
+	   d.dept_name
+from employees e
+CROSS join department d;
+
+-- 90 Suppose you want to create all possible combinations of employee names
+-- and department names, but only for departments IT and HR.
+
+SELECT e.fname,
+       d.dept_name
+FROM employees e
+CROSS JOIN department d
+WHERE d.dept_name IN ('IT', 'HR');
+
+-- 91 Display every possible combination of employee names 
+-- and department names, but only for the IT department.
+
+select e.fname,
+	   d.dept_name
+from employees e
+cross join department d
+where dept_name = 'IT';
+
+-- Now we have to start SUBQUERIES
+
+-- 92 Display employees whose salary is greater than the average salary of all employees.
+Select fname, salary
+FROM employees
+where salary > (
+	SELECT avg(salary)
+    from employees);
+    
+-- 93 Display the employee name and salary of the employee who has the highest salary.
+select fname, salary
+from employees
+where salary = ( 
+	select max(salary)
+    from employees);
+    
+-- 94 Display all employees whose salary is greater than the average salary.
+select fname, salary
+	from employees
+where salary > (
+	select avg(salary) 
+    from employees);
+
+-- 95 Display the employee name and salary of employees who earn the same salary as Rahul
+select fname, salary 
+	from employees
+where salary  = (
+select salary from employees
+where fname = 'Rahul');
+
+-- 96 Display the employees who work in the same departments as Rahul.
+select fname, dept_id
+from employees 
+	where dept_id IN (
+select dept_id from employees
+where fname = 'Rahul');
+
+-- 97 Display employees whose salary is greater than the salary of Prashant.
+select fname, salary
+from employees
+where salary > (
+select max(salary) from employees
+	where fname = 'Prashant');
+
+-- 98 Display employees whose salary is less than the highest salary in the company.
+select fname, salary 
+from employees 
+where salary < (
+select max(salary) from employees);
+
+-- 99 Display employees whose salary is equal to the lowest salary in the company.
+
+select fname, salary
+from employees
+where salary = (
+select min(salary) from employees);
+
+-- 100 Display employees whose salary is greater than the salary of Rahul.
+select fname, salary 
+from employees
+where salary > (
+select salary from employees where fname = 'Rahul');
+
+-- 101 Display employees whose salary is greater
+-- than or equal to the average salary of all employees.
+
+select fname, salary 
+from employees 
+where salary >= (
+select avg(salary) from employees
+);
+
+-- 102 Display employees whose salary is less than the average salary of all employees.
+select fname, salary 
+from employees 
+where salary < (
+select avg(salary) from employees);
+    
+-- 103  Display the names of employees.
+-- who work in either the IT department or the HR department using UNION.
