@@ -9,7 +9,7 @@ create table employees(
     salary DECIMAL(10,2) NOT NULL,
     department VARCHAR(50)
     );
--- 3  INSERTING DATA
+-- 3  INSERTING DATA....
 
 INSERT INTO employees(emp_id, first_name, last_name, gender, salary, department) Values
 	(101,'Prashant','Kumar','M','55000','IT'),
