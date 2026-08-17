@@ -729,6 +729,349 @@ select fname, salary
 from employees 
 where salary < (
 select avg(salary) from employees);
-    
+
+-- 15/08/2026
+
 -- 103  Display the names of employees.
 -- who work in either the IT department or the HR department using UNION.
+select * from employees 
+where dept_id = 1
+UNION
+select * from employees
+where dept_id = 2;
+
+-- 104 Display all employees from IT and HR using UNION ALL.
+select * from employees 
+where dept_id = 1
+UNION ALL
+select * from employees
+where dept_id = 2;
+
+-- 105 Display only the employee names from the IT and HR departments using UNION.
+select fname from employees 
+where dept_id = 1
+union 
+select fname from employees
+where dept_id = 2;
+
+-- 106 Display the names of employees from the IT department and HR department using UNION ALL.
+select fname from employees
+where dept_id = 1
+UNION ALL
+select fname from employees
+where dept_id = 2;
+
+-- 107 Display the employee names and salaries of employees
+-- from the IT department and Finance department using UNION.
+select fname, salary from employees
+where dept_id = 1
+UNION 
+select fname, salary from employees
+where dept_id = 3;
+
+-- 108 Display employee names and salaries from the IT and HR departments,
+-- remove duplicate rows, and sort the final result by salary in descending order.
+
+SELECT fname, salary
+FROM employees
+WHERE dept_id = 1
+UNION
+SELECT fname, salary
+FROM employees
+WHERE dept_id = 2
+ORDER BY salary DESC;
+
+-- 109 Display all unique employee names from the IT, HR, and Finance departments using UNION.
+select fname from employees 
+where dept_id = 1
+UNION
+select fname from employees
+where dept_id = 2
+union 
+select fname from employees
+where dept_id = 3;
+
+-- 110  Display the employee names and salaries from the IT and HR departments using UNION ALL, 
+-- and sort the final result by salary from highest to lowest.
+select fname, salary from employees
+where dept_id = 1
+UNION all
+select fname, salary from employees
+where dept_id = 2
+order by salary desc;
+
+-- 111 Display employee names from the IT, HR, and Finance departments using UNION ALL, 
+-- and sort the final result alphabetically by employee name.
+
+select fname from employees
+where dept_id = 1
+UNION ALL
+select fname from employees
+where dept_id = 2
+UNION ALL
+select fname from employees
+where dept_id = 3
+order by fname ASC;
+
+-- 112 Display the employee name and salary from the IT, HR, and Finance departments using UNION,
+-- and sort the final result by salary from highest to lowest.
+
+select fname, salary from employees
+where dept_id = 1
+UNION
+select fname, salary from employees
+where dept_id = 2
+UNION
+select fname, salary from employees
+where dept_id = 3
+order by salary DESC;
+
+-- 113 Display the employee names
+-- who are working in the IT department but not in the HR department.
+select fname from employees
+where dept_id = 1;
+
+-- 114 Display the employee names and salaries of employees from the IT and HR departments using UNION ALL,
+-- but only include employees whose salary is greater than 50,000.
+
+select fname, salary from employees
+where dept_id = 1 and salary > 50000
+union
+select fname, salary from employees
+where dept_id = 2 and salary > 50000;
+
+-- 115 Display the names of employees from the IT, HR, and
+-- Finance departments whose salary is greater than 60,000, using UNION ALL. 
+select fname from employees
+where dept_id = 1 and salary > 60000
+UNION ALL
+select fname from employees
+where dept_id = 2 and salary > 60000
+UNION ALL
+select fname from employees
+where dept_id = 3 and salary > 60000;
+
+-- CASE QUESTION
+-- 116 Display salary and whether the salary is high or low. 
+-- Salary above 50,000 is High, otherwise Low.
+select salary,
+		CASE 
+			when salary > 50000 then 'High'
+            else 'low'
+		end as salary_status
+	from employees;
+
+-- 117 Now suppose:
+-- Above 60,000 → High
+-- 40,000–60,000 → Medium
+-- Below 40,000 → Low
+select fname,salary,
+		case
+			when salary > 60000 then 'high'
+            when salary >= 40000 then 'medium'
+            else 'low'
+		end as salary_status
+	from employees;
+    
+-- 118 Display the employee name, salary, and a new column called salary_status.
+-- Rules:
+-- Salary greater than 60,000 → High
+-- Salary between 40,000 and 60,000 → Medium
+-- Salary below 40,000 → Low
+
+select fname, salary,
+			case	
+				when salary > 60000 then 'HIGH'
+                when salary between 40000 and 60000 then 'MEDIUM'
+                else 'low'
+			end as salary_status
+		from employees;
+        
+        
+-- 119 Display the employee name, department ID, and a new column called department_type.
+select fname, dept_id,
+		case
+			when dept_id = 1 then 'IT'
+            when dept_id = 2 then 'HR'
+            when dept_id = 3 then 'Finance'
+		else 'Other'
+	end as department_type
+from employees;
+
+-- 120 Display the employee name, salary, and a new column called bonus.
+-- Rules:
+-- Salary greater than 70,000 → bonus = 10% of salary
+-- Salary between 50,000 and 70,000 → bonus = 5% of salary
+-- Salary below 50,000 → bonus = 2% of salary
+
+select fname, salary,
+		case 
+			when salary > 70000 then salary * 0.10
+            when salary between 50000 and 70000 then salary * 0.05
+            when salary < 50000 then salary * 0.02
+            else ''
+		end as bonus
+	from employees;
+    
+-- 121 Display the employee name, salary, and a new column called salary_grade using these rules:
+-- Salary ≥ 80,000 → A
+-- Salary ≥ 60,000 → B
+-- Salary ≥ 40,000 → C
+-- Salary ≥ 30,000 → D
+-- Otherwise → F
+-- Also, sort the final result by salary_grade in ascending order.
+
+select fname, salary,
+		case
+			when salary >= 80000 then 'A'
+            when salary >= 60000 then 'B'
+            when salary >= 40000 then 'C'
+            when salary >= 30000 then 'D'
+            else 'F'
+		end as salary_grade 
+	from employees order by salary_grade ASC;
+
+-- 122 Display the employee name, salary, and a new column called performance.
+-- Rules:
+-- Salary ≥ 80,000 → Excellent
+-- Salary ≥ 60,000 → Good
+-- Salary ≥ 40,000 → Average
+-- Salary < 40,000 → Needs Improvement
+-- Then sort the result by salary from highest to lowest.
+
+select fname, salary,
+		case	
+			when salary >= 80000 then 'Excellent'
+            when salary >= 60000 then 'Good'
+            when salary >= 40000 then 'Average'
+            when salary < 40000 then 'Improvement'
+			else ''
+		end as performance
+	from employees order by salary DESC;
+
+-- 123 Display the employee name, salary, and a new column called salary_category.
+-- Rules:
+-- Salary ≥ 80,000 → Premium
+-- Salary ≥ 60,000 → High
+-- Salary ≥ 45,000 → Medium
+-- Salary ≥ 30,000 → Low
+-- Otherwise → Very Low
+-- Then sort the result by salary_category alphabetically and,
+-- within each category, sort salary from highest to lowest.
+
+select fname, salary,
+		case	
+			when salary >= 80000 then 'Premium'
+            when salary >= 60000 then 'High'
+            when salary >= 45000 then 'Medium'
+            when salary >= 30000 then 'Low'
+            else 'Very Low'
+		end as salary_category 
+	from employees order by salary_category ASC, salary DESC;
+    
+-- 124 Display the employee name, salary, and a new column called salary_message.
+-- Rules:
+-- Salary ≥ 80,000 → Top Earner
+-- Salary ≥ 60,000 → Above Average
+-- Salary ≥ 40,000 → Average
+-- Salary ≥ 30,000 → Below Average
+-- Otherwise → Low Earner
+-- Sort the result first by salary_message alphabetically, then by salary from highest to lowest.
+
+select fname, salary,
+		case	
+			when salary >= 80000 then 'Top Earner'
+            when salary >= 60000 then 'Above Average'
+            when salary >= 40000 then ' Average'
+            when salary >= 30000 then 'below average'
+            else 'Low Earner'
+		end as salary_message
+	from employees order by salary_message ASC, salary DESC;
+    
+    
+-- 125 Display the employee name, salary, and a new column called salary_level.
+-- Rules:
+-- Salary ≥ 100,000 → Level 1
+-- Salary ≥ 75,000 → Level 2
+-- Salary ≥ 50,000 → Level 3
+-- Salary ≥ 35,000 → Level 4
+-- Otherwise → Level 5
+-- Also display only employees whose salary is greater than 30,000,
+-- and sort the final result by salary in descending order.
+
+select fname, salary,
+			case 
+				when salary >= 100000 then 'Level 1'
+                when salary >= 75000 then 'Level 2'
+                when salary >= 50000 then 'Level 3'
+                when salary >= 35000 then 'level 4'
+			else 'Level 5'
+		end as salary_level
+	from employees where salary > 30000 order by salary DESC;
+    
+    
+-- 126 Display the employee name, salary, and a new column called bonus_status.
+-- Rules:
+-- Salary ≥ 100,000 → 20% Bonus
+-- Salary ≥ 75,000 → 15% Bonus
+-- Salary ≥ 50,000 → 10% Bonus
+-- Salary ≥ 35,000 → 5% Bonus
+-- Otherwise → No Bonus
+-- Only include employees whose salary is greater than 30,000.
+-- Sort by salary from highest to lowest.
+select fname, salary,
+		case 
+			when salary >= 100000 then salary * 0.20
+            when salary >= 75000 then salary * 0.15
+            when salary >= 50000 then salary * 0.10
+            when salary >= 35000 then salary * 0.05
+            else 'No Bonus'
+		end as bonus_status
+	from employees where salary > 30000 
+    order by salary DESC;
+    
+-- 127 Display the employee name, salary, and a new column called bonus_amount.
+
+-- Rules:
+
+-- Salary ≥ 100,000 → 20% of salary
+-- Salary ≥ 75,000 → 15% of salary
+-- Salary ≥ 50,000 → 10% of salary
+-- Salary ≥ 35,000 → 5% of salary
+-- Otherwise → 0
+
+-- Only include employees whose salary is greater
+-- than 30,000 and sort by bonus_amount from highest to lowest.
+
+select fname, salary,
+		case
+			when salary >= 100000 then salary * 0.20
+            when salary >= 75000 then salary * 0.15
+            when salary >= 50000 then salary * 0.10
+            when salary >= 35000 then salary * 0.05
+            else 0
+		end as bonus_amount
+	from employees where salary > 30000 order by bonus_amount DESC; 
+    
+-- 128 Display the employee name, salary, and a new column called final_salary.
+-- Rules:
+-- Salary ≥ 100,000 → add 20% bonus
+-- Salary ≥ 75,000 → add 15% bonus
+-- Salary ≥ 50,000 → add 10% bonus
+-- Salary ≥ 35,000 → add 5% bonus
+-- Otherwise → no bonus
+
+-- Display only employees whose final salary is greater than 60,000.
+-- Sort the result by final_salary from highest to lowest.
+
+select fname, salary,
+		case
+			when salary >= 100000 then salary + (salary * 0.20)
+            when salary >= 75000 then salary + (salary * 0.15)
+            when salary >= 50000 then salary + (salary * 0.10)
+            when salary >= 35000 then salary + (salary * 0.05)
+            else ''
+	   end as final_salary
+       from employees where salary	> 60000
+       order by final_salary DESC;
+            
