@@ -111,6 +111,7 @@ This repository is useful for:
 - Stored Procedures
 - Triggers
 - Indexes
+- CASE STATEMENT
 
 ---
 
