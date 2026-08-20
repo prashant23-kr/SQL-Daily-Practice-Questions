@@ -1074,4 +1074,118 @@ select fname, salary,
 	   end as final_salary
        from employees where salary	> 60000
        order by final_salary DESC;
-            
+
+-- WINDOW FUNCTION
+
+--  129 Display the employee name, salary,
+-- and a row number for each employee based on salary from highest to lowest.
+
+select fname, salary,
+		ROW_NUMBER() OVER (ORDER BY salary DESC) AS salary_emp
+	from employees;
+    
+-- 130 Display the employee name, salary, and rank of each employee
+-- based on salary from highest to lowest using RANK().
+
+SELECT fname, salary,
+		RANK () OVER(ORDER BY SALARY desc) AS salary_emp
+	from employees;
+    
+-- 131 Display the employee name, salary, and dense rank of each employee
+-- based on salary from highest to lowest using DENSE_RANK().
+
+select fname, salary,
+		dense_rank() OVER(order by salary desc) as emp_sal
+	from employees;
+
+
+-- 132 Display the employee name, department ID, salary, and a row number for each employee
+-- where the row numbering should restart from 1 for each department.
+select fname, dept_id , salary,
+		row_number() over(partition by dept_id order by salary desc) as department_id
+	from employees;
+    
+-- 133 Display the employee name, department ID, salary, and the rank of each employee based on salary
+-- within their own department. Employees with the same salary should receive the same rank.
+
+select fname, dept_id, salary,
+	rank() over(partition by dept_id order by salary desc) as salary_rank
+from employees;
+
+-- 134 Display the employee name, department ID, salary, and the DENSE_RANK()
+-- of each employee based on salary within their department.
+
+select fname, dept_id, salary,
+		dense_rank() over(partition by dept_id order by salary desc) as sal_dept
+	from employees;
+
+-- 135 Display the employee name, department ID, salary, 
+-- and the total salary of all employees in that employee's department.
+
+select fname, dept_id, salary, sum(salary)
+		 over(partition by dept_id) as total_sal
+	from employees;
+
+-- 136  Display:
+-- Employee name
+-- Department ID
+-- Salary
+-- Average salary of that employee's department
+
+select fname, dept_id, salary, avg(salary)
+ over (partition by dept_id) as avg_salary
+from employees;
+
+-- 137 Display the employee name, department ID, salary,
+-- and the difference between the employee's salary and the average salary of their department.
+select fname, dept_id, salary,
+salary - AVG(salary) OVER(PARTITION BY dept_id) as mid_sal
+from employees;
+
+-- 138 Display the employee name, department ID, salary, 
+-- and the percentage of the department's total salary contributed by each employee.
+
+select fname,dept_id, salary,
+(salary/sum(salary)  over(partition by dept_id))* 100 AS PER_SALARY
+FROM EMPLOYEES; 
+
+-- 139 Display the employee name, department ID, salary, 
+-- and the running total of salary within each department.
+
+SELECT fname, dept_id, salary,
+sum(salary) over(partition by dept_id order by salary asc) as total_sal
+from employees;
+-- 140 Display the employee name, department ID, salary, 
+-- and the running total of salary within each department.
+
+SELECT fname, dept_id, salary,
+sum(salary) over(partition by dept_id order by salary asc) as total_sal
+from employees;
+
+-- 141 Display the employee name, department ID, salary, and the running total of salary within each department,
+-- but this time calculate the running total based on salary ASC (lowest salary first).
+
+select fname, dept_id, salary, sum(salary)
+over(partition by dept_id order by salary ASC) as lowest_salary
+from employees;
+
+-- 142 Display the employee name, salary, and the salary of the previous employee
+-- when employees are ordered by salary from highest to lowest.
+
+select fname, salary, LAG(salary)
+over( order by salary DESC) as pervious_salary from employees;
+ 
+-- 143 Display the employee name, department ID, salary, and the previous employee's salary within the same department. 
+-- Order employees by salary from highest to lowest within each department.
+
+select fname, dept_id, salary, LAG(salary)
+over(partition by dept_id order by salary DESC) as each_dept
+from employees;
+
+-- 144 Display the employee name, department ID, salary, and the difference between the
+-- current employee's salary and the previous employee's salary within the same department. Order by salary from highest to lowest.
+select fname, dept_id, salary , LAG(salary) 
+over(partition by dept_id order by salary DESC) as previous_sal,
+salary - LAG(salary)
+over(partition by dept_id order by salary desc) as salary_difference
+from employees;
