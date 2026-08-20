@@ -40,6 +40,7 @@ This repository is useful for:
 - IS NULL
 - NOT NULL
 - UNION
+- Window Function
 
 
 
