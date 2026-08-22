@@ -1189,3 +1189,44 @@ over(partition by dept_id order by salary DESC) as previous_sal,
 salary - LAG(salary)
 over(partition by dept_id order by salary desc) as salary_difference
 from employees;
+
+-- 145 Display the employee name, department ID, salary, and the difference between the current 
+-- employee's salary and the previous employee's salary within the same department.
+
+select fname, dept_id, salary, 
+LAG(salary) 
+over(partition by dept_id ORDER BY salary DESC) as previouse_sal,
+salary - lag(salary) over(partition by dept_id ORDER BY salary DESC) as salary_difference
+from employees;
+
+-- 146 Display the employee name, department ID, salary, 
+-- and the salary of the next employee within the same department.
+-- Order employees by salary from highest to lowest.
+
+select fname, dept_id, salary,
+LEAD(salary) over(partition by dept_id order by salary DESC) as next_sal
+from employees;
+
+-- 147 Display the employee name, department ID, salary, and the difference 
+-- between the current employee's salary and the next employee's salary
+--  within the same department. Order by salary from highest to lowest.
+select fname, dept_id, salary,
+LEAD(salary) over(partition by dept_id order by salary desc) as next_emp,
+salary - LEAD(salary) over(partition by dept_id order by salary desc) as salary_diff
+from employees;
+
+-- 148 Display the employee name, department ID, salary,
+--  and the highest salary in that employee's department.
+select fname, dept_id, salary,
+max(salary) over(partition by dept_id order by salary desc) as highest_salary
+from employees;
+
+-- 149 Display the employee name, department ID, salary, and the lowest salary in that employee's department.
+
+select fname,dept_id, salary,
+min(salary) over(partition by dept_id order by salary asc) as lowest_sal
+from employees;
+
+-- 150 Display the employee name, department ID, salary, and the percentage
+-- difference between the employee's salary and the average salary of their department.
+
