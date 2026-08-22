@@ -1,6 +1,6 @@
 # 🚀 SQL Daily Practice Journey
 
-> A growing collection of **100+ MySQL practice questions and solutions** covering SQL fundamentals, database operations, aggregate functions, and JOINs.
+> A growing collection of **150+ MySQL practice questions and solutions** covering SQL fundamentals, database operations, aggregate functions, and JOINs.
 
 This repository documents my **daily SQL learning journey**, where I solve SQL problems consistently to strengthen my database skills and prepare for **Data Analyst, Data Science, and SQL Developer interviews**.
 
