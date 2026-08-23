@@ -1227,6 +1227,3 @@ select fname,dept_id, salary,
 min(salary) over(partition by dept_id order by salary asc) as lowest_sal
 from employees;
 
--- 150 Display the employee name, department ID, salary, and the percentage
--- difference between the employee's salary and the average salary of their department.
-
