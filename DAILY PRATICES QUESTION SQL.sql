@@ -9,7 +9,7 @@ create table employees(
     salary DECIMAL(10,2) NOT NULL,
     department VARCHAR(50)
     );
--- 3  INSERTING DATA......
+-- 3  INSERTING DATA....
 
 INSERT INTO employees(emp_id, first_name, last_name, gender, salary, department) Values
 	(101,'Prashant','Kumar','M','55000','IT'),
@@ -1226,4 +1226,146 @@ from employees;
 select fname,dept_id, salary,
 min(salary) over(partition by dept_id order by salary asc) as lowest_sal
 from employees;
+
+-- 150 Display the employee name, department ID, salary, and the percentage
+-- difference between the employee's salary and the average salary of their department.
+
+select fname, dept_id, salary,
+(salary - AVG(salary) OVER(PARTITION BY dept_id))
+/
+AVG(salary) OVER(PARTITION BY dept_id)
+* 100 as percentage_sal
+from employees;
+
+-- 151 Display the employee name, department ID, salary, and the percentage 
+-- rank of each employee based on salary within their department.
+
+-- Use the PERCENT_RANK() window function.
+
+select fname, dept_id, salary,
+percent_rank() over(partition by dept_id order by salary) as salary_percent_rank
+from employees;
+
+-- 152 Display the employee name, department ID, salary, and the cumulative distribution of 
+-- each employee's salary within their department.
+-- Use CUME_DIST() and rank employees from lowest salary to highest salary.
+
+select fname, dept_id, salary,
+cume_dist() over(partition by dept_id order by salary ASC)  as lowest_highest
+from employees;
+
+-- 153 Display the employee name, salary, and divide all employees into 4 salary groups using
+-- NTILE(4), where employees with the highest salaries should be placed in group 1.
+
+select fname, salary,NTILE(4) 
+OVER(order by salary DESC) as high_sal
+from employees;
+
+-- 154 Display the employee name, department ID, salary, and divide employees within each
+-- department into 3 salary groups using NTILE(3). The highest salaries in each department 
+-- should be placed in Group 1.
+
+select fname, dept_id, salary, NTILE(3)
+over(partition by dept_id order by salary desc) as high_sal
+from employees;
+
+-- 155 Display the employee name, department ID, salary,
+-- and the highest salary in their department using FIRST_VALUE().
+
+select fname, dept_id, salary,
+FIRST_VALUE(salary) over(partition by dept_id order by salary DESC) as highest_sal
+from employees;
+
+-- 156 Display the employee name, department ID, salary, 
+-- and the lowest salary in their department using LAST_VALUE().
+
+select fname, dept_id, salary,
+last_value(salary) over(partition by dept_id order by salary asc
+ ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING )as lowest_sal
+from employees;
+
+-- again 
+
+-- CTE Function
+-- 157 Create a CTE named high_salary that contains employees whose salary is greater than 60,000.
+-- Then display:
+-- Employee name
+-- Salary
+
+with high_salary AS (
+	select fname, salary from employees
+    where salary > 60000
+)
+select * from high_salary;
+
+-- 158 Create a CTE named dept_avg that calculates the average salary for each department.
+-- Then display: dept_id, avg_salary
+
+with dept_avg AS (
+select dept_id,avg(salary) as avg_salary from employees
+group by dept_id
+)
+select dept_id, avg_salary from dept_avg;
+
+-- 159 Create a CTE named high_paid that contains: fname dept_id salary
+-- Only employees whose salary is greater than 60,000.
+-- Then display the employees from the CTE ordered by salary from highest to lowest.
+
+with high_paid as (
+select fname, dept_id, salary from employees
+where salary > 60000 
+)
+select fname, dept_id, salary from high_paid order by salary DESC;
+
+-- 160 Create a CTE named dept_salary that calculates the total salary for each department.
+-- Then display: dept_id, total_salary
+-- Sort the result by total_salary from highest to lowest.
+
+with dept_salary as (
+select dept_id , sum(salary) as total_salary from employees
+group by dept_id
+)
+select dept_id, total_salary from dept_salary
+order by total_salary DESC;
+
+-- 161 Create a CTE named dept_avg that calculates the average salary for each department.
+-- Then join that CTE with the employees table and display:
+-- Employee name
+-- Department ID
+-- Employee salary
+-- Department average salary
+
+WITH dept_avg AS (
+    SELECT dept_id,
+           AVG(salary) AS average_salary
+    FROM employees
+    GROUP BY dept_id
+)
+SELECT e.fname,
+       e.dept_id,
+       e.salary,
+       d.average_salary
+FROM employees e
+JOIN dept_avg d
+ON e.dept_id = d.dept_id;
+
+-- 162 Create a CTE named dept_total that calculates the total salary for each department.
+-- Then join it with employees and display:
+-- Employee name
+-- Department ID
+-- Employee salary
+-- Department total salary
+
+with dept_total as (
+select dept_id, sum(salary) as total_salary from employees
+group by dept_id
+)
+select e.fname,
+	   e.dept_id,
+       e.salary,
+       d.total_salary
+from employees e
+join dept_total d
+on e.dept_id = d.dept_id;
+
 
