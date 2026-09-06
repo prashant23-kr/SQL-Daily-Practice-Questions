@@ -48,7 +48,7 @@ select * from employees where department IN ('IT','HR') AND salary > 50000;
 select * from employees where salary NOT between 50000 and 60000;
 
 -- 11 Display all employees whose department is IT, HR, or Finance.
-select * from employees where department NOT IN ('IT','HR');
+select * from employees where department IN ('IT','HR','Finance');
 
 -- 12 Display all employees whose first name starts with the letter P.
 select * from employees WHERE first_name LIKE '_r%';
