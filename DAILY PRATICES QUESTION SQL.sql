@@ -24,7 +24,7 @@ select * from employees;
 -- 5 Display all details of employees whose department is IT.
 select * from employees where department = 'IT';
 -- 6 Display all employees whose salary is greater than 50,000.
-select * from employees where department <> 'IT';
+select * from employees where salary > 50000;
 
 -- 7  Display all employees who:
 -- belong to the IT department AND
@@ -41,6 +41,7 @@ select * from employees where department IN ('IT','HR');
 -- 9 Display all employees who:
 -- are in the IT department OR
 -- are in the HR department
+-- and salary is greater than 50000
 
 select * from employees where department IN ('IT','HR') AND salary > 50000;
 -- 10 Display all employees whose salary is between 50,000 and 60,000 (inclusive).
