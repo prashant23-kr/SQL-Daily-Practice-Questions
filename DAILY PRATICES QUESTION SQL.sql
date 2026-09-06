@@ -51,7 +51,7 @@ select * from employees where salary NOT between 50000 and 60000;
 select * from employees where department IN ('IT','HR','Finance');
 
 -- 12 Display all employees whose first name starts with the letter P.
-select * from employees WHERE first_name LIKE '_r%';
+select * from employees WHERE first_name LIKE 'P%';
 
 -- 13 Display all employees, sorted by salary in ascending order (lowest salary first).
 select * from employees order by salary ASC;
