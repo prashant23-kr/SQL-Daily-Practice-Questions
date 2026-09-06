@@ -72,10 +72,12 @@ select count(*) from employees;
 select count(*) from employees where department IS NOT null;
 
 -- 19 Find the total salary of all employees.
-select min(salary) from employees;
+select sum(salary) from employees;
 
 -- 20 Display the number of employees in each department.
-select count(department) from employees group by department;
+SELECT department, COUNT(*) AS employee_count
+FROM employees
+GROUP BY department;
 
 -- 21 Display the average salary of each department.
 select department, avg(salary) AS avg_salary from employees group by department;
@@ -119,7 +121,7 @@ select * from employees where department is null;
 -- 31 Update Rahul's salary to ₹52,000.
 UPDATE employees
 SET salary = 52000
-WHERE first_name = 'Priya';
+WHERE first_name = 'Rahul';
 
 -- 32 Delete the employee Aman from the employees table.
 delete from employees where first_name = 'Aman';
@@ -197,6 +199,7 @@ select e.fname, d.dept_name
 	from employees e
     INNER JOIN department d
 on e.dept_id = d.dept_id;
+
 Select * from employees;
 -- 47 Display all employees, even if they don't have a department. (LEFT JOIN)
 select e.fname, d.dept_name
