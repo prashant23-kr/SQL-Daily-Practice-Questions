@@ -24,7 +24,7 @@ select * from employees;
 -- 5 Display all details of employees whose department is IT.
 select * from employees where department = 'IT';
 -- 6 Display all employees whose salary is greater than 50,000.
-select * from employees where salary > 50000;
+select * from employees where department <> 'IT';
 
 -- 7  Display all employees who:
 -- belong to the IT department AND
@@ -41,14 +41,13 @@ select * from employees where department IN ('IT','HR');
 -- 9 Display all employees who:
 -- are in the IT department OR
 -- are in the HR department
--- and salary is greater than 50000
 
 select * from employees where department IN ('IT','HR') AND salary > 50000;
 -- 10 Display all employees whose salary is between 50,000 and 60,000 (inclusive).
 select * from employees where salary NOT between 50000 and 60000;
 
 -- 11 Display all employees whose department is IT, HR, or Finance.
-select * from employees where department IN ('IT','HR','Finance');
+select * from employees where department NOT IN ('IT','HR');
 
 -- 12 Display all employees whose first name starts with the letter P.
 select * from employees WHERE first_name LIKE 'P%';
@@ -72,12 +71,10 @@ select count(*) from employees;
 select count(*) from employees where department IS NOT null;
 
 -- 19 Find the total salary of all employees.
-select sum(salary) from employees;
+select min(salary) from employees;
 
 -- 20 Display the number of employees in each department.
-SELECT department, COUNT(*) AS employee_count
-FROM employees
-GROUP BY department;
+select count(department) from employees group by department;
 
 -- 21 Display the average salary of each department.
 select department, avg(salary) AS avg_salary from employees group by department;
@@ -121,7 +118,7 @@ select * from employees where department is null;
 -- 31 Update Rahul's salary to ₹52,000.
 UPDATE employees
 SET salary = 52000
-WHERE first_name = 'Rahul';
+WHERE first_name = 'Priya';
 
 -- 32 Delete the employee Aman from the employees table.
 delete from employees where first_name = 'Aman';
@@ -190,7 +187,8 @@ on e.fname = d.dept_id;
 -- Right Join
 -- 45 Display all departments, including those that have no employees.
 select e.fname, d.dept_name
-	from employees e RIGHT JOIN department d
+	from employees e 
+RIGHT JOIN department d
 on d.dept_id = d.dept_id;
 
 -- 46 Display the employee name and department name. (INNER JOIN)
@@ -199,7 +197,6 @@ select e.fname, d.dept_name
 	from employees e
     INNER JOIN department d
 on e.dept_id = d.dept_id;
-
 Select * from employees;
 -- 47 Display all employees, even if they don't have a department. (LEFT JOIN)
 select e.fname, d.dept_name
@@ -296,7 +293,7 @@ select dept_name, SUM(e.salary) as total_salary
 from employees e
 inner join department d
 on e.dept_id  = d.dept_id
-group by dept_name having  sum(e.salary) >100000;
+group by dept_name having sum(e.salary) >100000;
 
 -- 59 Display: dept_name COUNT(*) as total_emp
 -- Show only those departments that have more than 1 employee.
@@ -330,8 +327,7 @@ on e.dept_id = d.dept_id
 where salary >= 50000 group by dept_name having avg(e.salary) > 55000
 order by avg_salary desc;
 
-05/08/2026
-
+--  05/08/2026
 
 -- 62 Display: dept_name MAX(e.salary) AS highest_salary
 -- Sort the result by highest_salary in descending order.
@@ -341,6 +337,7 @@ Inner join department d
 on e.dept_id = d.dept_id
 group by dept_name having highest_salary
 order by highest_salary DESC;
+
 
 -- 63 -- Display: dept_name MIN(e.salary) AS lowest_salary
 -- Show only those departments whose lowest salary is greater than 50,000. 
@@ -477,6 +474,7 @@ left join employees e
 on d.dept_id = e.dept_id;
 
 -- Right Join
+
 
 -- 74  Display: fname dept_name
 -- Show all departments, even if no employee belongs to them.
@@ -1093,7 +1091,7 @@ select fname, salary,
 
 SELECT fname, salary,
 		RANK () OVER(ORDER BY SALARY desc) AS salary_emp
-	from employees;
+from employees;
     
 -- 131 Display the employee name, salary, and dense rank of each employee
 -- based on salary from highest to lowest using DENSE_RANK().
@@ -1372,6 +1370,517 @@ from employees e
 join dept_total d
 on e.dept_id = d.dept_id;
 
+-- MOCK PRATICES
+-- 01 Display the employee name, salary, and department name for all employees, 
+-- including employees who are not assigned to any department.
 
--- 163 
+select e.fname, e.salary, d.dept_name from employees e
+left join department d
+on e.dept_id = d.dept_id;
 
+-- 02 Display the employee name, employee salary, and department name
+--  for employees who are assigned to a department.
+
+select e.fname, e.salary, d.dept_name from employees e
+inner join department d
+on e.dept_id = d.dept_id;
+
+-- 03 Display all departments and the employees working in each department. 
+-- Also include departments that currently have no employees.
+select d.dept_name, e.fname from department d
+left join employees e
+on e.dept_id = d.dept_id;
+
+-- 04 Find all employees who are NOT assigned to any department.
+
+select e.fname from employees e
+left join department d
+on e.dept_id = d.dept_id
+where dept_name is NULL;
+
+-- 05 Display all employees along with their department names. 
+-- If an employee is not assigned to any department, display "No Department" instead of NULL.
+SELECT e.fname,
+       COALESCE(d.dept_name, 'No Department') AS dept_name
+FROM employees e
+LEFT JOIN department d
+ON e.dept_id = d.dept_id;
+
+-- 06 Display the employee name, department name, and salary 
+-- of employees whose salary is greater than 60,000.
+
+select e.fname, d.dept_name, e.salary from employees e
+left join department d
+on e.dept_id = d.dept_id
+where e.salary > 60000;
+
+-- 07 Display each department name and the number of employees working in that department. 
+-- Include departments that have zero employees.
+
+select d.dept_name, count(fname) as employee_count from department d
+left join employees e
+on e.dept_id = d.dept_id
+group by d.dept_id, d.dept_name order by employee_count;
+
+-- 08 Display the department name and the average salary of employees in each department. 
+-- Include only departments whose average salary is greater than 60,000.
+select d.dept_name, avg(salary) as avg_salary from employees e
+left join department d
+on e.dept_id = d.dept_id
+GROUP BY d.dept_id, d.dept_name
+HAVING AVG(e.salary) > 60000;
+
+-- 09 Display the department name and the total salary paid by each department. 
+-- Show only departments where the total salary is greater than 200,000.
+select d.dept_name, sum(e.salary) as total_salary from department d
+left join employees e
+on e.dept_id = d.dept_id
+group by d.dept_id
+having sum(e.salary) > 200000;
+
+
+-- MOCK PRATICE 07/09/2026
+-- 01 Display the employee's first name and their department name.
+select e.fname, d.dept_name
+from employees e
+inner join department d
+on e.dept_id = d.dept_id;
+
+-- 02 Display all employees along with their department names, 
+-- including employees who do NOT belong to any department.
+
+select e.fname, d.dept_name
+from employees e
+left join department d
+on e.dept_id = d.dept_id;
+
+-- 03 Display all departments along with the employees working in them.
+--  Include departments that have NO employees.
+
+select e.fname, d.dept_name
+from employees e
+right join department d
+on e.dept_id = d.dept_id;
+
+-- 04 Find the employees who are not assigned to any department.
+select e.fname from employees e
+left join department d
+on e.dept_id = d.dept_id
+where dept_name is null;
+
+-- 05 Find the departments that have NO employees.
+select d.dept_name
+from employees e
+right join department d
+on e.dept_id = d.dept_id
+where e.emp_id is null;
+ 
+-- 06 Display the first name, salary, and department name of employees 
+-- whose salary is greater than ₹50,000.
+select e.fname, e.salary, d.dept_name 
+from employees e
+left join department d
+on e.dept_id = d.dept_id
+where e.salary > 50000;
+
+-- 07 Find the average salary of employees in each department.
+select d.dept_name avg(salary) as avg_salary 
+from employees e
+left join department d
+on e.dept_id = d.dept_id
+group by d.dept_name;
+
+-- 08 Find the total salary paid to employees in each department.
+select d.dept_name, sum(salary) as total_salary
+from employees e
+left join department d
+on e.dept_id = d.dept_id
+group by d.dept_name;
+
+-- 09 Find the number of employees working in each department.
+select d.dept_name, count(fname) as employee_count
+from employees e
+left join department d
+on e.dept_id = d.dept_id
+group by d.dept_name;
+
+-- 10 Find departments where the number of employees is greater than 3.
+select d.dept_name, count(fname) as employee_count
+from employees e
+right join department d
+on e.dept_id = d.dept_id
+group by d.dept_name having count(fname) > 3;
+
+-- 11 Find the employees who earn more than their manager.
+SELECT 
+    e.fname AS employee,
+    m.fname AS manager
+FROM employees e
+LEFT JOIN employees m
+    ON e.manager_id = m.emp_id
+where e.salary > m.salary;
+
+-- 12 Display the names of employees who have the same manager.
+SELECT 
+    e1.fname AS employee1,
+    e2.fname AS employee2
+FROM employees e1
+JOIN employees e2
+    ON e1.manager_id = e2.manager_id
+    AND e1.emp_id < e2.emp_id;
+    
+-- 13 Find the highest-paid employee in the company along with their department name.
+select d.dept_name, max(e.salary) as highest_salary
+from employees e
+left join department d 
+on e.dept_id = d.dept_id
+group by d.dept_name;
+
+-- 14 Find the highest-paid employee in the company along with their department name.
+
+select d.dept_name, e.fname, max(salary) as highest_paid_employees
+from employees e
+left join department d
+on e.dept_id = d.dept_id
+group by d.dept_name;
+
+-- WINDOW FUNCITION
+-- 01 Display all employees along with a row number based on their salary, 
+-- from highest salary to lowest salary.
+
+select fname,
+row_number() over(order by salary desc)
+from employees;
+
+-- 02 Assign a row number to employees based on salary, 
+-- but restart the numbering for each department.
+select fname, salary,dept_id,
+rank() over(partition by dept_id order by salary desc) as empp
+from employees;
+
+-- 03 Rank employees by salary within each department, with the highest salary getting rank 1.
+select fname,salary, dept_id,
+rank() over(partition by dept_id order by salary desc)
+from employees;
+
+-- 04 Display fname, salary, and all three rankings 
+-- — ROW_NUMBER(), RANK(), and DENSE_RANK() — based on salary from highest to lowest.
+SELECT 
+    fname,
+    salary,
+    dept_id,
+    ROW_NUMBER() OVER(ORDER BY salary DESC) AS row_num,
+    RANK() OVER(ORDER BY salary DESC) AS rank_num,
+    DENSE_RANK() OVER(ORDER BY salary DESC) AS dense_rank_num
+FROM employees;
+
+-- 05 Find the highest-paid employee from each department.
+select fname, salary, dept_id,
+rank() over(partition by dept_id) as row_num
+from employees e;
+ 
+-- 151 Display the employee name, department ID, salary, and the percentage 
+-- rank of each employee based on salary within their department.
+
+-- Use the PERCENT_RANK() window function.
+
+select fname, dept_id, salary, percent_rank()
+OVER(partition by dept_id order by salary asc);
+
+-- 152 Display the employee name, department ID, salary, and the cumulative distribution of 
+-- each employee's salary within their department.
+-- Use CUME_DIST() and rank employees from lowest salary to highest salary.
+
+select fname,dept_id, salary,cume_dist()
+over(partition by dept_id order by salary asc) as lowest_sal
+from employees;
+
+-- -- 153 Display the employee name, salary, and divide all employees into 4 salary groups using
+-- NTILE(4), where employees with the highest salaries should be placed in group 1.
+
+select fname, salary, NTILE(4)
+OVER(order by salary asc) as lowest_sal
+from employees;
+
+-- 154 Display the employee name, department ID, salary, and divide employees within each
+-- department into 3 salary groups using NTILE(3). The highest salaries in each department 
+-- should be placed in Group 1.
+
+-- CTE Function
+-- 157 Create a CTE named high_salary that contains employees whose salary is greater than 60,000.
+-- Then display:
+-- Employee name
+-- Salary
+
+with high_salary as(
+select fname,salary
+from employees 
+where salary > 60000
+)
+select  * from high_salary;
+
+-- 158 Create a CTE named dept_avg that calculates the average salary for each department.
+-- Then display: dept_id, avg_salary
+
+with dept_avg as (
+select dept_id,avg(salary) as avg_salary from
+employees
+group by dept_id
+)
+select dept_id, avg_salary from dept_avg; 
+
+-- 159 Create a CTE named high_paid that contains: fname dept_id salary
+-- Only employees whose salary is greater than 60,000.
+-- Then display the employees from the CTE ordered by salary from highest to lowest.
+
+with high_paid as (
+select fname, dept_id, salary
+from employees
+where salary > 60000
+)
+select fname, salary, dept_id from high_paid order by salary desc;
+
+-- 160 Create a CTE named dept_salary that calculates the total salary for each department.
+-- Then display: dept_id, total_salary
+-- Sort the result by total_salary from highest to lowest.
+
+with dept_salary as (
+select dept_id , sum(salary) as total_salary from employees
+group by dept_id
+)
+select dept_id, total_salary from dept_salary
+order by total_salary DESC;
+
+
+
+-- 01 Find employees whose salary is greater than the 
+-- average salary of all employees.
+
+select fname, salary
+from employees
+where salary > (
+select avg(salary) as avg_sal
+from employees);
+
+-- 02 Find the employee(s) having the second-highest salary in the company.
+select fname, salary
+from employees
+where salary = (
+select distinct salary from employees
+order by salary desc
+limit 1 offset 1);
+
+-- 03 Find all employees who work in the same department as Rahul
+select fname, dept_id from employees 
+where dept_id = (
+select dept_id from employees
+where fname = 'Rahul');
+
+-- 04 Find the employee(s) who have the highest salary using a subquery
+select fname, salary from employees
+where salary = (
+select max(salary)
+from employees);
+
+-- 05 Find employees who work in the department whose name is 'IT', using a subquery.
+select fname,salary, dept_id
+from employees
+where dept_id = (
+select dept_id from department
+where dept_name = 'IT');
+
+-- 06 Find the departments that have 
+-- at least one employee earning more than 70,000.
+
+select distinct dept_id
+from employees
+where salary IN (
+select dept_id from employees
+where salary > 70000);
+
+-- 07 Find employees whose salary is greater 
+-- than the average salary of their own department.
+
+select e.fname, e.salary, e.dept_id
+from employees e
+where salary > (
+select avg(salary) from employees
+group by dept_id);
+
+-- 08 Find the employee(s) 
+-- who have the third-highest distinct salary in the company.
+
+select fname, salary
+from employees 
+where salary = (
+select distinct salary from employees
+order by salary desc
+limit 1 offset 2);
+
+-- 09 Find employees whose emp_id appears as a manager_id for another employee
+select * from employees
+where emp_id IN (
+select manager_id from employees	
+where manager_id is not null);
+
+-- 10 Find employees who do NOT work in the same department as Rahul.
+SELECT fname, dept_id
+FROM employees
+WHERE dept_id != (
+    SELECT dept_id
+    FROM employees
+    WHERE fname = 'Rahul'
+);
+
+
+-- CTE --
+-- 01 Create a CTE that calculates the average salary for each department.
+
+with avg_salary as (
+select dept_id, avg(salary) as average_salary from employees
+group by dept_id
+)
+select dept_id, average_salary from avg_salary;
+
+-- 02 Create a CTE for the average salary of each department, then display
+-- each employee along with their department's average salary.
+
+with average_salary as (
+select dept_id, avg(salary) as avg_salary
+from employees
+group by dept_id
+)
+select e.fname,
+	   d.dept_id,
+       e.salary,
+	   e.avg_salary
+	from employees e
+inner join average_salary a
+on e.dept_id = d.dept_id;
+
+-- 03 Using a CTE, find departments whose average salary 
+-- is greater than the overall average salary of the company.
+
+WITH avg_salary AS (
+    SELECT dept_id, AVG(salary) AS average_salary
+    FROM employees
+    GROUP BY dept_id
+)
+SELECT dept_id, average_salary
+FROM avg_salary
+WHERE average_salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+
+-- 04 Using a CTE, find the highest-paid employee in each department.
+WITH high_salary AS (
+    SELECT
+        fname,
+        dept_id,
+        salary,
+        RANK() OVER(
+            PARTITION BY dept_id
+            ORDER BY salary DESC
+        ) AS salary_rank
+    FROM employees
+)
+SELECT fname, dept_id, salary
+FROM high_salary
+WHERE salary_rank = 1;
+
+-- 🔥 The pattern to memorize
+-- Whenever interviewer says:
+-- Highest / Top N in each department
+
+-- 05 Using a CTE, 
+-- find the employee(s) with the second-highest salary in each department
+
+with sec_highest as (
+select fname, salary, dept_id,
+rank() over(partition by dept_id order by salary desc)
+as second_salary
+)
+SELECT fname, dept_id, salary
+FROM high_salary
+WHERE salary_rank = 2;
+
+-- 06 Create a CTE that calculates the total salary for each department, 
+-- then display the departments ordered by total salary from highest to lowest.
+
+with total_sal as (
+select dept_id, sum(salary) as total_salary
+from employees
+group by dept_id
+)
+select dept_id, total_salary from total_sal
+order by total_salary desc;
+
+-- 07 Using a CTE, find the department having the highest total employee salary.
+WITH total_sal AS (
+    SELECT dept_id, SUM(salary) AS total_salary
+    FROM employees
+    GROUP BY dept_id
+)
+SELECT dept_id, total_salary
+FROM total_sal
+WHERE total_salary = (
+    SELECT MAX(total_salary)
+    FROM total_sal
+);
+
+-- 08 Using a CTE, find all employees whose salary is greater than the average salary
+--  of their own department.
+WITH mid_salary AS (
+    SELECT dept_id,
+           AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY dept_id
+)
+SELECT e.fname,
+       e.dept_id,
+       e.salary,
+       m.avg_salary
+FROM employees e
+JOIN mid_salary m
+ON e.dept_id = m.dept_id
+WHERE e.salary > m.avg_salary;
+
+-- WINDOW FUNCTION
+-- Rank all employees based on salary from highest to lowest using RANK() .
+
+SELECT fname, salary,
+rank() over(order by salary desc) as highest_salary
+from employees;
+
+-- 02 Assign a unique row number to every employee based on salary descending
+select fname, salary,
+row_number() over(order by salary desc) as unique_sal
+from employees;
+
+-- 03 Rank employees inside each department according to salary.
+select fname, salary, dept_id,
+rank() over(partition by dept_id order by salary asc) as emp_sal
+from employees;
+
+-- 04 Find the employee with the highest salary in every department
+select fname, salary, dept_id,
+rank() over(partition by dept_id order by salary desc) as highest_salary
+from employees;
+
+-- 05 Find the second-highest-paid employee(s) in each department.
+WITH ranked_emp AS (
+    SELECT fname,
+           salary,
+           dept_id,
+           RANK() OVER(
+               PARTITION BY dept_id
+               ORDER BY salary DESC
+           ) AS salary_rank
+    FROM employees
+)
+SELECT fname, dept_id, salary
+FROM ranked_emp
+WHERE salary_rank = 2;
+
+-- 06 Find the top 2 highest-paid employees in every department
