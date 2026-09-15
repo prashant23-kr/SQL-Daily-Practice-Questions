@@ -11,6 +11,8 @@ create table employees(
     );
 -- 3  INSERTING DATA....
 
+
+
 INSERT INTO employees(emp_id, first_name, last_name, gender, salary, department) Values
 	(101,'Prashant','Kumar','M','55000','IT'),
     (102,'Rahul', 'Sharma','M','48000','HR'),
