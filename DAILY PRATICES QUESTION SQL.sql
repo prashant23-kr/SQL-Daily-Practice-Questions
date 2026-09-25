@@ -19,6 +19,8 @@ INSERT INTO employees(emp_id, first_name, last_name, gender, salary, department)
     (103,'Priya','Singh','F','62000','Finance'),
     (104,'Aman','Verma','M','51000','Sales'),
     (105,'Neha','Gupta','F','59000','IT');
+
+
     
 -- 4 Display the record
 select * from employees;    
